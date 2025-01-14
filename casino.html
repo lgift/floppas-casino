@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐈 FLOPPA'S CASINO! 🐈</title>
+    <link rel="icon" type="image/x-icon" href="../images/hair.jpg">
+    <script src="slotmachine.js" defer></script>
+
+    <div class="header">
+        <h1>🐈 FLOPPA'S CASINO 🐈</h1>
+    </div>
+
+    <div class="music-controls">Music:
+        <select id="musicSelect" class="music-dropdown">
+            <option value="boneDepot">Bone Depot</option>
+            <option value="AppartementTheme">Appartement</option>
+            <option value="Downtown">Downtown</option>
+            <option value="PlanarianPuzzle">Planarian Puzzle</option>
+            <option value="Sunshine">Sunshine</option>
+            <option value="LegalWoes">Legal Woes</option>
+            <option value="MiniGolf">Mini Golf</option>
+            <option value="PawprintPanic">Pawprint Panic!</option>
+            <option value="OkayEveryone">Okay, Everyone!</option>
+            <option value="mute">🔇 MUTE 🔇</option>
+            
+        </select>
+    </div>
+
+    <style>
+        body {
+            background:#1a1a1a;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            align-items: center;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 24px
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            background: #1a1a1a;  /* match your background color */
+            padding: 25px 0;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            margin: 0;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+   
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            color: white;
+            
+        }
+
+        .music-dropdown {
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border: 1px solid #666;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .music-dropdown:hover {
+            background: #444;
+        }
+
+        .music-dropdown:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background:  #222222;
+        }
+
+        .slot-machine {
+            background: #2d2d2d;
+            padding: 40px;
+            border-radius: 20px;
+            width: fit-content;
+            
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stats-box {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            flex: 1;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-height: 60px;
+        }
+
+        .stats-box.time {
+            flex-direction: column;
+            text-align: center;
+}
+
+        .dabloons {
+            color: green;
+        }
+
+        .loan {
+            color: #ff6b6b;
+        }
+
+        .time {
+            color: #4dc3ff;
+        }
+
+        .reels {
+            display: flex;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .reel {
+            width: 200px;
+            height: 200px;
+            border: 4px solid #666666;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .reel img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            transition: top 0.5s ease-in-out;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .spin-button {
+            background: #4CAF50;
+            color: black;
+            border: none;
+            padding: 30px 60px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .loan-button {
+            background: #ff6b6b;
+            color: black;
+            border: none;
+            padding: 30px 60px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .pay-loan-button {
+            background: #ff6b6b;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .confirm-loan {
+            background: #fad7d7;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .cancel-loan {
+            background: #000000;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #000000;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .dead-home-button {
+            background: #000000;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 32px;
+            font-family: Georgia, 'Times New Roman', Times, serif
+        }
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .stuff {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stuff1 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            justify-content: center;
+            align-items: center;
+            font-family: Georgia, 'Times New Roman', Times, serif
+        }
+
+        .stuff.show {
+            display: flex;
+        }
+
+        .stuff1.show {
+            display: flex;
+        }
+
+        .loan-content {
+            background: #2d2d2d;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .loan-amount-input {
+            padding: 20px;
+            font-size: 36px;
+            width: 200px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .win-message {
+            text-align: center;
+            color: gold;
+            height: 60px;
+            margin-top: 20px;
+            font-size: 32px;
+        }
+
+        .shop-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background-color: #2e539e;
+            color: white;
+            transition: background-color 0.3s;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 32px;
+            
+        }
+
+        .shop-button:hover {
+            background-color: #2e539e;
+        }
+        
+        #minusBottle, #plusBottle {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        #buyAlcohol, #closeShopButton {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: #d57676;
+            color: black;
+            cursor: pointer;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        #bottleCount {
+            font-size: 20px;
+            margin: 0 15px;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+        }
+
+        .winning-flash {
+            animation: flashGreen 0.5s ease-in-out 3;
+        }
+
+        /*i just disocvered and learned about animations and this is so COOOL!!!*/
+        @keyframes flashGreen{
+            0% {background-color: #2d2d2d}
+            50% {background-color: #4CAF50}
+            100% {background-color: #2d2d2d;}
+        }
+
+        @keyframes flashRed{
+            0% {background-color: #2d2d2d}
+            50% {background-color: #ff6767}
+            100% {background-color: #2d2d2d;}
+        }
+
+        @keyframes deathTurn{
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(25deg)
+        scale(0.9);
+            }
+        }
+        
+        .dying {
+            overflow: hidden;
+            animation: deathTurn 120s ease-in-out;
+            transform-origin: center center
+        }
+
+        .loan-flash {
+            animation: flashRed 0.5s ease-in-out 3
+        }
+    </style>
+</head>
+<body>
+    <!--main slot machines and stats-->
+    <div class = "slot-machine" id = slotMachine>
+        <div class="stats-container">
+            <div class="stats-box dabloons">
+                Dabloons: $<span id="dabloonCounter">200</span>
+            </div>
+            <div class="stats-box loan">
+                Loan: $<span id="loanCounter">0</span>
+            </div>
+            <div class="stats-box time">
+                Time until<br>payment: <span id="timeCounter">0</span>
+            </div>
+        </div>
+
+    <!--spinny columns theyre technicaly called reels apparently-->
+        <div class="reels">
+            <div class="reel" id="reel1">
+                <img src="../images/soggy.jpg">
+            </div>
+            
+            <div class="reel" id="reel2">
+                <img src="../images/toinge.png">
+            </div>
+
+            <div class="reel" id="reel3">
+                <img src="../images/stretch.jpg">
+            </div>
+
+            <div class="reel" id="reel4">
+                <img src="../images/sproing.jpg">
+            </div>
+        </div>
+
+        <div id="shopStuff" class="stuff">
+            <div class="loan-content">
+                <h1>Floppa's Shop</h1>
+                <h>ITEM OF THE DAY:</p>
+                <p style="color: rgb(255, 155, 155)"><b>🍺ALCOHOL🍺</b></p>
+                <p>"It's not gambling without alcohol poisoning!"</p>
+                <h5 style="color: yellow"><i>(50 dabloons per bottle)</i></h5>
+                
+                <button id="minusBottle">-</button>
+                <span id="bottleCount">0</span>
+                <button id="plusBottle">+</button>
+        
+                <button id="buyAlcohol">Buy Drink</button>
+                <button id="closeShopButton">Cancel</button>
+            </div>
+        </div>
+
+    <!--controls buttons-->
+        <div class="controls">
+            <button class="spin-button" id="spinButton">SPIN!!! (-20 dabloons)</button>
+            <button class="loan-button" id="loanButton">Take Out Loan</button>
+            <button class="shop-button" id="shopButton">Floppa's Shop</button>
+        </div>
+
+        <div class="win-message" id="winMessage"></div>
+
+    </div>
+
+    <!--taking out a loan-->
+    <div class="stuff" id="loanStuff">
+        <div class="loan-content">
+          <h2>Take Out a Loan</h2>
+          <input type="number" id="loanAmountInput" class="loan-amount-input" min="100" step="100" value="500">
+          <p style="color: red">🚨 20% interest will be added and needed to be paid back. 🚨</p>
+          <button id="confirmLoanButton" class = "confirm-loan">Confirm Loan</button>
+          <button id="cancelLoanButton" class = "cancel-loan">Cancel</button>
+        </div>
+      </div>
+
+    <!--payment due-->
+    <div class="stuff" id="paymentStuff">
+        <div class="loan-content">
+            <h2>LOAN PAYMENT DUE!!</h2>
+            <p>YOU NEED TO PAY BACK <span id="loanAmount">0</span> dabloons!</p>
+            <button id="payLoanButton" class="pay-loan-button">Pay Loan Back</button>
+        </div>
+    </div>
+
+    <!--you die DIE DIE DIE FAILED TO PAY BACK DEBT-->
+    <div class="stuff1" id="deathStuff">
+        <div class="loan-content">
+            <div class="death-screen"><b><h1 style="color: rgb(202, 17, 17)">YOU FAILED TO PAY BACK YOUR LOAN</h1></b></div>
+            <p>You will bathe in the blood of your transgressions.<br><br>You may believe there will be mercy on your soul,<br>but you ultimately will never find any.<br><br>Worms will inhabit your skull and birds will pick at your flesh<br>as your soul falls down further into the darkest pits of hell,<br><br>where your presence will be long awaited.</p>
+            <button id="homeScreenButton" class="dead-home-button" style="color: rgb(219, 56, 56);">SUCCUMB TO YOUR FATE</button>   
+        </div>
+    </div>
+
+    <!---->
+    <div class="stuff" id="adStuff">
+        <div class="loan-content">
+            <button id="closeAdButton" style="margin-top: 20px">X</button>
+            <img id="adImage" src="">
+        </div>
+    </div>
+
+    <div>
+        <a href="..\Mainpage.html"><button id="alien" class="home-button" onmouseover="NO()" onmouseout="stopAudio()">HOME</button></a>
+    </div>
+
+    <script>
+        var pleaseno = new Audio('../audios/God.mp3')
+        var please = new Audio('../audios/NO.mp3')
+
+        function NO() {
+            pleaseno.play()
+            pleaseno.volume = 0.5
+            please.play()
+        }
+
+        function stopAudio() {
+            pleaseno.pause()
+            pleaseno.currentTime = 0
+            please.pause()
+            please.currentTime = 0
+        }
+    </script>
+
+    <style>
+        button:hover{
+            transform: scale(1.05)
+        }
+    </style>
+</body>
+</html>
