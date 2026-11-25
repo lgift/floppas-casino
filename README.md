@@ -1,6 +1,5 @@
-# FLOPPA'S CASINO
-
-Welcome to <b>FLOPPA'S CASINO!</b> A cat themed slot machine simulation.
+<h3 align="center">Welcome to <b>FLOPPA'S CASINO!</b> A cat themed slot machine simulation.</h3>
+<img width="100%" alt="Screenshot 2026-11-25 035719" src="https://github.com/user-attachments/assets/3edb0780-029a-413b-86e0-3c5c61e23c62" />
 
 # INSTRUCTIONS
  1. Download all as .zip.
